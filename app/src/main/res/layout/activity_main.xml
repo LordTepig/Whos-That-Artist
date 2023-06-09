@@ -1,10 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical">
-    <EditText>/
-        android:id="@+id/enter_artist_edit_text"
-        android:layout_width= "match_parent"
-        android:layout_height- "wrap_content"
-        android:hint="@string/artist_search"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content">
+    <EditText
+        android:id="@+id/artist_search_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/artist_search">
     </EditText>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/artist_name_text_view"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="150dp"
+            android:text="@string/artist_name"
+            app:layout_constraintEnd_toStartOf="@+id/artist_picture_image_view"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/artist_picture_image_view"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="150dp"
+            android:src="@drawable/Spotify_Logo_for_Artist"
+            app:layout_constraintStart_toEndOf="@+id/artist_name_text_view"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="150dp" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

@@ -2,22 +2,17 @@ package com.example.whosthatartist
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
-import androidx.fragment.app.activityViewModels
-import androidx.activity.viewModels
-import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.fragment.app.viewModels
-import com.example.whosthatartist.ui.theme.WhosThatArtistTheme
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log
+import com.spotify.android.appremote.api.ConnectionParams;
+import com.spotify.android.appremote.api.Connector;
+import com.spotify.android.appremote.api.SpotifyAppRemote;
 
 class MainActivity : ComponentActivity() {
     //private val viewModel : ArtistViewModel by activityViewModels()
-
+    private val clientId = "f118ce828b834d0689ef34871cc03ccf"
+    private val redirectUri = "https://localhost:127.0.0.1/callback"
+    private var spotifyAppRemote: SpotifyAppRemote? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,16 +21,36 @@ class MainActivity : ComponentActivity() {
     }
     override fun onStart() {
         super.onStart()
-        // We will start writing our code here.
+        val connectionParams = ConnectionParams.Builder(clientId)
+            .setRedirectUri(redirectUri)
+            .showAuthView(true)
+            .build()
+        SpotifyAppRemote.connect(this, connectionParams, object : Connector.ConnectionListener {
+            override fun onConnected(appRemote: SpotifyAppRemote) {
+                spotifyAppRemote = appRemote
+                Log.d("MainActivity", "Connected! Yay!")
+                // Now you can start interacting with App Remote
+                connected()
+            }
+
+            override fun onFailure(throwable: Throwable) {
+                Log.e("MainActivity", throwable.message, throwable)
+                // Something went wrong when attempting to connect! Handle errors here
+            }
+        })
     }
 
     private fun connected() {
-        // Then we will write some more code here.
+        //Todo: Display the artists from the edit text searches
+
     }
 
     override fun onStop() {
         super.onStop()
-        // Aaand we will finish off here.
+        spotifyAppRemote?.let {
+            SpotifyAppRemote.disconnect(it)
+        }
+
     }
 }
 
