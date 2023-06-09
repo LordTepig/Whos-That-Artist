@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Who\'s That Artist</string>
+    <string name="artist_search">Enter the name of an Artist</string>
+</resources>
